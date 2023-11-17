@@ -1,20 +1,34 @@
 import * as React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { useState } from 'react';
+import userEvent from '@testing-library/user-event'
 
 import BookForm from '../BookForm';
+
+global.fetch = jest.fn(() =>
+Promise.resolve({
+  json: () => Promise.resolve({}),
+})
+) as jest.Mock;
 
 describe('BookForm Tests', () => {
 
   it('renders correctly', async () => {
 
-    const [reload, setReload] = useState<boolean>(false);
-
-    render(<BookForm formName='borrow' formValue='Oliver Twist' disabled={false} reload={reload} setReload={setReload}></BookForm>);
+    render(<BookForm formName='borrow' formValue='Oliver Twist' disabled={false} reload={false} setReload={() => {}}></BookForm>);
         
     await waitFor(() => {
-      expect(screen.getByRole('form', {name: 'borrow'})).toBeDefined();
+      expect(screen.getByRole('button', {name: 'submit'})).toBeDefined();
     })
+  })
+
+  it('responds to click event correctly', async () => {
+    const user = userEvent.setup();
+
+    render(<BookForm formName='borrow' formValue='Oliver Twist' disabled={false} reload={false} setReload={() => { reload = true }}></BookForm>);
+
+    let reload = false;
+    await user.click(screen.getByRole('button', {name: 'submit'}));
+    expect(reload).toBe(true);
   })
 
 });

@@ -1,7 +1,7 @@
 'use client'
 
 import Book from '../model/Book';
-import BookItem from "./BookItem";
+import BookItem from './BookItem';
 import { useState, useEffect } from 'react';
 
 interface BookGridProps {
@@ -16,7 +16,7 @@ export default function BookGrid( { formName } : BookGridProps ) {
 
   useEffect(() => {
     async function getBooks(borrowed: Number) {
-      const res = await fetch(`http://localhost:3001/books/${borrowed}`)   
+      const res = await fetch(`http://localhost:3001/books/${borrowed}`)
       if (!res.ok) {
         throw new Error('Failed to fetch Books data')
       }

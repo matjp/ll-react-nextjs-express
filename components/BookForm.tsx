@@ -25,7 +25,7 @@ export default function BookForm( { formName, formValue, disabled, reload, setRe
   return (
     <>
       <div className="p-2 flex justify-center">
-        <button name='submit' onClick={updateBook} disabled={disabled}
+        <button name='submit' aria-label='submit' onClick={updateBook} disabled={disabled}
           className="bg-blue-500 hover:bg-blue-700 disabled:bg-gray-500 text-white font-bold py-2 px-4 rounded items-center">{formName[0].toUpperCase() + formName.slice(1).toLowerCase()}</button>
       </div>
     </>
