@@ -24,7 +24,6 @@ app.get('/', (req, res) => {
     res.send('Welcome to the Lending Library API Server');
 });
 app.get('/books/:borrowed', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('Get Books');
     const mysql = require('mysql2/promise');
     const connection = yield mysql.createConnection({ host: 'localhost', user: 'api', password: 'password', database: 'library' });
     const bBorrowed = Number.parseInt(req.params.borrowed);
@@ -34,7 +33,6 @@ app.get('/books/:borrowed', (req, res) => __awaiter(void 0, void 0, void 0, func
     res.send(rows);
 }));
 app.put('/books/borrow/:title', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('Borrow Book');
     const mysql = require('mysql2/promise');
     const connection = yield mysql.createConnection({ host: 'localhost', user: 'api', password: 'password', database: 'library' });
     const updateCmd = 'update book set borrowed = 1 where title =  "' + req.params.title + '"';
@@ -42,7 +40,6 @@ app.put('/books/borrow/:title', (req, res) => __awaiter(void 0, void 0, void 0, 
     res.send('Book borrowed');
 }));
 app.put('/books/return/:title', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('Return Book');
     const mysql = require('mysql2/promise');
     const connection = yield mysql.createConnection({ host: 'localhost', user: 'api', password: 'password', database: 'library' });
     const updateCmd = 'update book set borrowed = 0 where title =  "' + req.params.title + '"';
