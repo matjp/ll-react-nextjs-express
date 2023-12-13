@@ -18,14 +18,14 @@ const cors_1 = __importDefault(require("cors"));
 //For env File 
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-const port = process.env.PORT || 8000;
+const port = process.env.EXPRESS_PORT || 8000;
 app.use((0, cors_1.default)());
 app.get('/', (req, res) => {
     res.send('Welcome to the Lending Library API Server');
 });
 app.get('/books/:borrowed', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const mysql = require('mysql2/promise');
-    const connection = yield mysql.createConnection({ host: 'localhost', user: 'api', password: 'password', database: 'library' });
+    const connection = yield mysql.createConnection({ host: process.env.DB_HOST, user: process.env.DB_USER, password: process.env.DB_PASS, database: 'library' });
     const bBorrowed = Number.parseInt(req.params.borrowed);
     const whereClause = bBorrowed === 1 ? ' where borrowed = 1 ' : '';
     const sql = `SELECT title, author, TO_BASE64(cover_image) as cover_image, borrowed FROM book ${whereClause} ORDER BY title`;
@@ -34,14 +34,14 @@ app.get('/books/:borrowed', (req, res) => __awaiter(void 0, void 0, void 0, func
 }));
 app.put('/books/borrow/:title', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const mysql = require('mysql2/promise');
-    const connection = yield mysql.createConnection({ host: 'localhost', user: 'api', password: 'password', database: 'library' });
+    const connection = yield mysql.createConnection({ host: process.env.DB_HOST, user: process.env.DB_USER, password: process.env.DB_PASS, database: 'library' });
     const updateCmd = 'update book set borrowed = 1 where title =  "' + req.params.title + '"';
     yield connection.execute(updateCmd);
     res.send('Book borrowed');
 }));
 app.put('/books/return/:title', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const mysql = require('mysql2/promise');
-    const connection = yield mysql.createConnection({ host: 'localhost', user: 'api', password: 'password', database: 'library' });
+    const connection = yield mysql.createConnection({ host: process.env.DB_HOST, user: process.env.DB_USER, password: process.env.DB_PASS, database: 'library' });
     const updateCmd = 'update book set borrowed = 0 where title =  "' + req.params.title + '"';
     yield connection.execute(updateCmd);
     res.send('Book returned');

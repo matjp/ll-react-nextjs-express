@@ -8,5 +8,8 @@
     "strict": true,
     "skipLibCheck": true
   },
+  "watchOptions": {
+    "watchFile": "dynamicPriorityPolling",
+  },
   "include": ["**/*.ts"]
 }
